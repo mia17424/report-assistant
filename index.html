@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>车站信息汇报助手</title>
+    <!-- 引入样式文件 -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="text-center my-4">
+            <h1>车站信息汇报助手</h1>
+            <!-- 站名选择区域 -->
+            <div class="station-name-input">
+                <label for="stationName" class="form-label">站名</label>
+                <select class="form-select" id="stationName" required onchange="handleStationChange()">
+                    <option value="">请选择站名</option>
+                    <option value="兰花路">兰花路</option>
+                    <option value="南湖">南湖</option>
+                    <option value="万寿路">万寿路</option>
+                    <option value="后堡">后堡</option>
+                    <option value="七星岗">七星岗</option>
+                    <option value="大礼堂">大礼堂</option>
+                    <option value="manual">手动输入</option>
+                </select>
+                <input type="text" class="form-control mt-2" id="stationNameManual" placeholder="请输入站点名称" style="display:none;" onblur="handleManualBlur()">
+            </div>
+        </header>
+
+        <!-- 报告类型选择器 -->
+        <div class="report-type-selector mb-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100" onclick="selectReportType('equipment')">设备故障汇报</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100" onclick="selectReportType('emergency')">突发事件汇报</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary w-100" onclick="selectReportType('inspection')">检查汇报</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 报告表单 -->
+        <form id="reportForm" class="report-form">
+            <!-- 设备故障表单 -->
+            <div id="equipmentForm" class="report-type-form" style="display: none;">
+                <div class="mb-3">
+                    <label for="equipmentTime" class="form-label">发生时间</label>
+                    <input type="datetime-local" class="form-control" id="equipmentTime" required>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentLocation" class="form-label">发生地点</label>
+                    <input type="text" class="form-control" id="equipmentLocation" required>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentName" class="form-label">故障设备</label>
+                    <input type="text" class="form-control" id="equipmentName" required>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentPhenomenon" class="form-label">故障现象</label>
+                    <textarea class="form-control" id="equipmentPhenomenon" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentImpact" class="form-label">影响情况</label>
+                    <textarea class="form-control" id="equipmentImpact" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentProcess" class="form-label">处理过程</label>
+                    <textarea class="form-control" id="equipmentProcess" rows="5" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentMeasures" class="form-label">当前措施</label>
+                    <textarea class="form-control" id="equipmentMeasures" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentReporter" class="form-label">报告人</label>
+                    <input type="text" class="form-control" id="equipmentReporter" required>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentReporterId" class="form-label">报告人工号</label>
+                    <input type="text" class="form-control" id="equipmentReporterId" required>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentReviewer" class="form-label">审核人</label>
+                    <input type="text" class="form-control" id="equipmentReviewer" required>
+                </div>
+                <div class="mb-3">
+                    <label for="equipmentReviewerId" class="form-label">审核人工号</label>
+                    <input type="text" class="form-control" id="equipmentReviewerId" required>
+                </div>
+            </div>
+
+            <!-- 突发事件表单 -->
+            <div id="emergencyForm" class="report-type-form" style="display: none;">
+                <div class="mb-3">
+                    <label for="emergencyTime" class="form-label">发生时间</label>
+                    <input type="datetime-local" class="form-control" id="emergencyTime" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyLocation" class="form-label">发生地点</label>
+                    <input type="text" class="form-control" id="emergencyLocation" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyType" class="form-label">事件类型</label>
+                    <input type="text" class="form-control" id="emergencyType" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyDescription" class="form-label">事件描述</label>
+                    <textarea class="form-control" id="emergencyDescription" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyImpact" class="form-label">影响情况</label>
+                    <textarea class="form-control" id="emergencyImpact" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyProcess" class="form-label">处理过程</label>
+                    <textarea class="form-control" id="emergencyProcess" rows="5" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyStatus" class="form-label">当前状态</label>
+                    <textarea class="form-control" id="emergencyStatus" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyReporter" class="form-label">报告人</label>
+                    <input type="text" class="form-control" id="emergencyReporter" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyReporterId" class="form-label">报告人工号</label>
+                    <input type="text" class="form-control" id="emergencyReporterId" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyReviewer" class="form-label">审核人</label>
+                    <input type="text" class="form-control" id="emergencyReviewer" required>
+                </div>
+                <div class="mb-3">
+                    <label for="emergencyReviewerId" class="form-label">审核人工号</label>
+                    <input type="text" class="form-control" id="emergencyReviewerId" required>
+                </div>
+            </div>
+
+            <!-- 检查汇报表单 -->
+            <div id="inspectionForm" class="report-type-form" style="display: none;">
+                <div class="mb-3">
+                    <label for="inspectionTime" class="form-label">检查时间</label>
+                    <input type="datetime-local" class="form-control" id="inspectionTime" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionPersonnel" class="form-label">检查人员</label>
+                    <input type="text" class="form-control" id="inspectionPersonnel" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionContent" class="form-label">检查内容</label>
+                    <textarea class="form-control" id="inspectionContent" rows="5" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionProblems" class="form-label">检查发现问题</label>
+                    <textarea class="form-control" id="inspectionProblems" rows="5" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionMeasures" class="form-label">整改措施</label>
+                    <textarea class="form-control" id="inspectionMeasures" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionReporter" class="form-label">报告人</label>
+                    <input type="text" class="form-control" id="inspectionReporter" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionReporterId" class="form-label">报告人工号</label>
+                    <input type="text" class="form-control" id="inspectionReporterId" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionReviewer" class="form-label">审核人</label>
+                    <input type="text" class="form-control" id="inspectionReviewer" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inspectionReviewerId" class="form-label">审核人工号</label>
+                    <input type="text" class="form-control" id="inspectionReviewerId" required>
+                </div>
+            </div>
+
+            <!-- 温馨提示区域 -->
+            <div class="text-center mb-4">
+                <div class="tip-box">迅速、准确、真实</div>
+            </div>
+        </form>
+
+        <!-- 报告预览区域 -->
+        <div id="reportPreview" class="report-preview" style="display: none;">
+            <h3>报告预览</h3>
+            <div id="previewContent" class="preview-content"></div>
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-success" onclick="generateReport()">生成报告</button>
+                <button type="button" class="btn btn-secondary" onclick="copyToClipboard()">复制报告</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 引入JavaScript文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

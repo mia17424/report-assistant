@@ -1,0 +1,150 @@
+/* 全局样式 */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+/* 容器样式 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 标题样式 */
+header h1 {
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* 站名输入区域样式 */
+.station-name-input {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.station-name-input .form-label {
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.station-name-input .form-control {
+    text-align: center;
+    font-size: 16px;
+}
+
+/* 报告类型选择器样式 */
+.report-type-selector {
+    margin-bottom: 30px;
+}
+
+.report-type-selector .btn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+/* 报告表单样式 */
+.report-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 表单标签样式 */
+.form-label {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* 表单控件样式 */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* 文本域样式 */
+textarea.form-control {
+    min-height: 100px;
+}
+
+/* 按钮样式 */
+.btn-success {
+    background-color: #2ecc71;
+    border-color: #2ecc71;
+    margin-right: 10px;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    border-color: #95a5a6;
+}
+
+/* 报告预览区域样式 */
+.report-preview {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+/* 预览内容样式 */
+.preview-content {
+    white-space: pre-wrap;
+    font-family: 'Microsoft YaHei', monospace;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+/* 报告预览区域按钮样式 */
+.report-preview .btn {
+    margin: 0 5px;
+    padding: 8px 20px;
+    font-size: 16px;
+}
+
+/* 温馨提示样式 */
+.tip-box {
+    background: #eaf6ff;
+    color: #e53935;
+    border-radius: 8px;
+    padding: 18px 0;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    letter-spacing: 4px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .report-form {
+        padding: 15px;
+    }
+    
+    .report-type-selector .btn {
+        margin: 5px 0;
+    }
+} 
