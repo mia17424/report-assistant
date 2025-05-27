@@ -204,14 +204,42 @@ function copyToClipboard() {
         return;
     }
 
-    navigator.clipboard.writeText(previewContent.textContent)
-        .then(() => {
+    // 优先使用现代API
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(previewContent.textContent)
+            .then(() => {
+                alert('报告已复制到剪贴板');
+            })
+            .catch(err => {
+                fallbackCopy(previewContent.textContent);
+            });
+    } else {
+        fallbackCopy(previewContent.textContent);
+    }
+}
+
+function fallbackCopy(text) {
+    // 创建一个临时textarea
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    // 防止页面滚动
+    textarea.style.position = 'fixed';
+    textarea.style.top = 0;
+    textarea.style.left = 0;
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
             alert('报告已复制到剪贴板');
-        })
-        .catch(err => {
-            console.error('复制失败:', err);
+        } else {
             alert('复制失败，请手动复制');
-        });
+        }
+    } catch (err) {
+        alert('复制失败，请手动复制');
+    }
+    document.body.removeChild(textarea);
 }
 
 /**
